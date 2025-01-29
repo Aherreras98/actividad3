@@ -19,3 +19,17 @@ public void mostrarMenu() {
         }
     } while (opcion != 0);
 }
+
+private void realizarPrestamo(Scanner scanner) {
+    System.out.print("Título del libro: ");
+    String titulo = scanner.nextLine();
+    for (Libro libro : gestorLibro.getLibrosDisponibles()) {
+    if (libro.getTitulo().equalsIgnoreCase(titulo)) {
+    libro.setPrestado(true);
+    usuarioActual.agregarPrestamo(libro);
+    gestorLibro.incrementarContadorPrestamos(libro);
+    break;
+    }
+    }
+    }
+    
