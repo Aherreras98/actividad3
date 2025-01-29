@@ -12,3 +12,7 @@ public boolean validarContrasena(String contrasena) {
 return this.contrasena.equals(contrasena);
 }
 }
+
+
+
+
