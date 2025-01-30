@@ -15,8 +15,16 @@ class Usuario {
         this.esAdmin = esAdmin;
     }
 
+    public String getNombre() {
+        return nombre;
+    }
+
     public boolean validarContrasena(String contrasena) {
         return this.contrasena.equals(contrasena);
+    }
+
+    public boolean esAdmin() {
+        return esAdmin;
     }
 
     public Libro[] getPrestamosActivos() {
