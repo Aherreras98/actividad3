@@ -5,10 +5,36 @@ import java.util.Comparator;
 import java.util.Scanner;
 
 public class SistemaBiblioteca {
+    private GestorLibro gestorLibro;
+    private Usuario[] usuarios = new Usuario[0];
+    private Usuario usuarioActual;
 
-    // TENGO QUE RELLENAR ESTA PARTE//
+    public SistemaBiblioteca() {
+        gestorLibro = new GestorLibro();
+        usuarioActual = null;
+    }
 
-}
+    public void iniciarSesion(String nombre, String contrasena) {
+        for (Usuario usuario : usuarios) {
+            if (usuario.getNombre().equalsIgnoreCase(nombre) && usuario.validarContrasena(contrasena)) {
+                usuarioActual = usuario;
+                System.out.println("Inicio de sesión exitoso. Bienvenido, " + usuarioActual.getNombre() + "!");
+                return;
+            }
+        }
+        System.out.println("Nombre de usuario o contraseña incorrectos.");
+    }
+
+    public void cerrarSesion() {
+        usuarioActual = null;
+        System.out.println("Sesión cerrada.");
+    }
+
+    public void registrarUsuario(String nombre, String contrasena, boolean esAdmin) {
+        Usuario[] nuevosUsuarios = Arrays.copyOf(usuarios, usuarios.length + 1);
+        nuevosUsuarios[usuarios.length] = new Usuario(nombre, contrasena, esAdmin);
+        usuarios = nuevosUsuarios;
+    }
 
     public void mostrarMenu() {
         if (usuarioActual == null) {
@@ -132,4 +158,20 @@ private void realizarPrestamo(Scanner scanner) {
             System.out.println("\nUsuario con más préstamos activos: " + topUsuario.getNombre());
         }
     }
+}
+
+    private void registrarNuevoUsuario(Scanner scanner) {
+        System.out.print("Ingrese nombre, contraseña, esAdmin (true/false, separados por comas): ");
+        String[] datos = scanner.nextLine().split(",");
+        registrarUsuario(datos[0].trim(), datos[1].trim(), Boolean.parseBoolean(datos[2].trim()));
+        System.out.println("Usuario registrado.");
+    }
+
+    private void mostrarUsuarios() {
+        System.out.println("\n--- Usuarios registrados ---");
+        for (Usuario usuario : usuarios) {
+            System.out.println(usuario);
+        }
+    }
+
 }
