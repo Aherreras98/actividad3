@@ -128,16 +128,88 @@ public class SistemaBiblioteca {
         } while (opcion != 0);
     }
 
-private void realizarPrestamo(Scanner scanner) {
-    System.out.print("Título del libro: ");
-    String titulo = scanner.nextLine();
-    for (Libro libro : gestorLibro.getLibrosDisponibles()) {
-    if (libro.getTitulo().equalsIgnoreCase(titulo)) {
-    libro.setPrestado(true);
-    usuarioActual.agregarPrestamo(libro);
-    gestorLibro.incrementarContadorPrestamos(libro);
-    break;
+    private void mostrarLibrosDisponibles() {
+        System.out.println("Libros disponibles:");
+        Libro[] disponibles = gestorLibro.getLibrosDisponibles();
+        System.out.println(Arrays.toString(disponibles));
     }
+
+    private void buscarLibro(Scanner scanner) {
+        System.out.print("Ingrese el criterio de búsqueda (título, autor, categoría): ");
+        String criterio = scanner.nextLine();
+        Libro[] resultados = gestorLibro.buscarLibros(criterio);
+        System.out.println(Arrays.toString(resultados));
+    }
+
+    private void realizarPrestamo(Scanner scanner) {
+        System.out.print("Título del libro: ");
+        String titulo = scanner.nextLine();
+        for (Libro libro : gestorLibro.getLibrosDisponibles()) {
+            if (libro.getTitulo().equalsIgnoreCase(titulo)) {
+                libro.setPrestado(true);
+                usuarioActual.agregarPrestamo(libro);
+                gestorLibro.incrementarContadorPrestamos(libro);
+                break;
+            }
+        }
+    }
+
+    private void devolverLibro(Scanner scanner) {
+        System.out.print("Ingrese el título del libro a devolver: ");
+        String titulo = scanner.nextLine();
+        Libro[] prestamos = usuarioActual.getPrestamosActivos();
+        for (Libro libro : prestamos) {
+            if (libro.getTitulo().equalsIgnoreCase(titulo)) {
+                libro.setPrestado(false);
+                usuarioActual.devolverPrestamo(libro);
+                System.out.println("Libro devuelto: " + libro.getTitulo());
+                return;
+            }
+        }
+        System.out.println("El libro no está en sus préstamos activos.");
+    }
+
+    private void mostrarPrestamosActivos() {
+        System.out.println("Sus préstamos activos:");
+        Libro[] prestamos = usuarioActual.getPrestamosActivos();
+        System.out.println(Arrays.toString(prestamos));
+    }
+
+    private void agregarLibro(Scanner scanner) {
+        System.out.print("Ingrese título, autor, categoría (separados por comas): ");
+        String[] datos = scanner.nextLine().split(",");
+        gestorLibro.agregarLibro(new Libro(datos[0].trim(), datos[1].trim(), datos[2].trim()));
+        System.out.println("Libro agregado.");
+    }
+
+    private void eliminarLibro(Scanner scanner) {
+        System.out.print("Ingrese el título del libro a eliminar: ");
+        String titulo = scanner.nextLine();
+        if (gestorLibro.eliminarLibro(titulo)) {
+            System.out.println("Libro eliminado.");
+        } else {
+            System.out.println("Libro no encontrado.");
+        }
+    }
+
+    private void mostrarLibrosPrestados() {
+        System.out.println("Libros prestados:");
+        Libro[] prestados = gestorLibro.getLibrosPrestados();
+        System.out.println(Arrays.toString(prestados));
+    }
+
+    private void registrarNuevoUsuario(Scanner scanner) {
+        System.out.print("Ingrese nombre, contraseña, esAdmin (true/false, separados por comas): ");
+        String[] datos = scanner.nextLine().split(",");
+        registrarUsuario(datos[0].trim(), datos[1].trim(), Boolean.parseBoolean(datos[2].trim()));
+        System.out.println("Usuario registrado.");
+    }
+
+    private void mostrarUsuarios() {
+        System.out.println("\n--- Usuarios registrados ---");
+        for (Usuario usuario : usuarios) {
+            System.out.println(usuario);
+        }
     }
 
     private void mostrarEstadisticas() {
@@ -158,20 +230,8 @@ private void realizarPrestamo(Scanner scanner) {
             System.out.println("\nUsuario con más préstamos activos: " + topUsuario.getNombre());
         }
     }
-}
 
-    private void registrarNuevoUsuario(Scanner scanner) {
-        System.out.print("Ingrese nombre, contraseña, esAdmin (true/false, separados por comas): ");
-        String[] datos = scanner.nextLine().split(",");
-        registrarUsuario(datos[0].trim(), datos[1].trim(), Boolean.parseBoolean(datos[2].trim()));
-        System.out.println("Usuario registrado.");
+    private void opcionInvalida() {
+        System.out.println("Opción no válida para su rol.");
     }
-
-    private void mostrarUsuarios() {
-        System.out.println("\n--- Usuarios registrados ---");
-        for (Usuario usuario : usuarios) {
-            System.out.println(usuario);
-        }
-    }
-
 }
