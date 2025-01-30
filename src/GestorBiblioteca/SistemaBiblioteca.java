@@ -1,5 +1,9 @@
 package GestorBiblioteca;
 
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Scanner;
+
 public class SistemaBiblioteca {
 
     //TENGO QUE RELLENAR ESTA PARTE//
@@ -31,5 +35,23 @@ private void realizarPrestamo(Scanner scanner) {
     break;
     }
     }
-    }
+private void mostrarEstadisticas() {
+        System.out.println("\n--- Estadísticas ---");
+        System.out.println("Préstamos totales: " + gestorLibro.getTotalPrestamosHistoricos());
+        System.out.println("Préstamos activos: " + gestorLibro.getLibrosPrestados().length);
+
+        Libro[] topLibros = gestorLibro.getLibrosMasPrestados();
+        System.out.println("\nTop 5 libros más prestados:");
+        for (int i = 0; i < topLibros.length; i++) {
+            System.out.println((i + 1) + ". " + topLibros[i].getTitulo());
+        }
+
+        Usuario topUsuario = Arrays.stream(usuarios)
+                .max(Comparator.comparingInt(Usuario::getPrestamosActivosCount))
+                .orElse(null);
+        if (topUsuario != null) {
+            System.out.println("\nUsuario con más préstamos activos: " + topUsuario.getNombre());
+        }
+    }    
+}
     
