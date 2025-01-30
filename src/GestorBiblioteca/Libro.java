@@ -13,9 +13,23 @@ class Libro {
         this.prestado = false;
     }
 
-    public String getTitulo() { return titulo; }
-    public String getAutor() { return autor; }
-    public String getCategoria() { return categoria; }
-    public boolean isPrestado() { return prestado; }
-    public void setPrestado(boolean prestado) { this.prestado = prestado; }
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public String getAutor() {
+        return autor;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public boolean isPrestado() {
+        return prestado;
+    }
+
+    public void setPrestado(boolean prestado) {
+        this.prestado = prestado;
+    }
 }

@@ -36,4 +36,11 @@ class GestorLibro {
         return contadorPrestamos.values().stream().mapToInt(Integer::intValue).sum();
     }
 
+    public Libro[] getLibrosMasPrestados() {
+        return contadorPrestamos.entrySet().stream()
+                .sorted(Map.Entry.<Libro, Integer>comparingByValue().reversed())
+                .limit(5)
+                .map(Map.Entry::getKey)
+                .toArray(Libro[]::new);
+    }
 }
