@@ -32,4 +32,14 @@ class Libro {
     public void setPrestado(boolean prestado) {
         this.prestado = prestado;
     }
+
+    @Override
+    public String toString() {
+        return "Libro{" +
+                "titulo='" + titulo + '\'' +
+                ", autor='" + autor + '\'' +
+                ", categoria='" + categoria + '\'' +
+                ", prestado=" + prestado +
+                '}';
+    }
 }

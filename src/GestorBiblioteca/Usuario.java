@@ -56,4 +56,12 @@ class Usuario {
         return prestamosActivos.length;
     }
 
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "nombre='" + nombre + '\'' +
+                ", esAdmin=" + esAdmin +
+                '}';
+    }
+
 }

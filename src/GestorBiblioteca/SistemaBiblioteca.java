@@ -234,4 +234,36 @@ public class SistemaBiblioteca {
     private void opcionInvalida() {
         System.out.println("Opción no válida para su rol.");
     }
+
+    public static void main(String[] args) {
+        SistemaBiblioteca sistema = new SistemaBiblioteca();
+
+        sistema.gestorLibro.agregarLibro(new Libro("Reina Roja", "Juan Gómez-Jurado", "Policíaca"));
+        sistema.gestorLibro.agregarLibro(new Libro("El Imperio Final", "Brandon Sanderson", "Fantasía"));
+        sistema.gestorLibro.agregarLibro(new Libro("El Quijote", "Miguel de Cervantes", "Clásico"));
+        sistema.gestorLibro.agregarLibro(new Libro("1984", "George Orwell", "Ficción"));
+        sistema.registrarUsuario("admin", "admin123", true);
+        sistema.registrarUsuario("usuario1", "pass1", false);
+
+        Scanner scanner = new Scanner(System.in);
+        boolean salir = false;
+
+        while (!salir) {
+            System.out.println("\n=== Sistema de Biblioteca ===");
+            System.out.print("Usuario: ");
+            String nombre = scanner.nextLine();
+            System.out.print("Contraseña: ");
+            String pass = scanner.nextLine();
+            sistema.iniciarSesion(nombre, pass);
+
+            if (sistema.usuarioActual != null) {
+                sistema.mostrarMenu();
+                sistema.cerrarSesion();
+            }
+
+            System.out.print("¿Salir? (true/false): ");
+            salir = scanner.nextBoolean();
+            scanner.nextLine();
+        }
+    }
 }

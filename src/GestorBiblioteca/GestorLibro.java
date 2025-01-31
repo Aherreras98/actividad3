@@ -63,4 +63,9 @@ class GestorLibro {
                 .toArray(Libro[]::new);
     }
 
+    @Override
+    public String toString() {
+        return Arrays.toString(libros);
+    }
+
 }
