@@ -1,3 +1,7 @@
+/**
+ * @author Adrián Herrera, Javier Villar
+ */
+
 package GestorBiblioteca;
 
 class Libro {
